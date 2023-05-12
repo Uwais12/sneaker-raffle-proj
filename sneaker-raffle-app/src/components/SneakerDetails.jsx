@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+import {
+  FaGlobe, FaStore, FaLaptop, FaCalendarAlt, FaShoePrints, FaTags,
+} from 'react-icons/fa';
 import api from '../api';
-import { FaGlobe, FaStore, FaLaptop, FaCalendarAlt, FaShoePrints, FaTags } from 'react-icons/fa';
 
 const fetchRaffles = async (sneakerId) => {
   const { data } = await api.get(`/api/raffles/sneaker/${sneakerId}`);
   return data;
 };
 
-const SneakerDetails = ({ sneaker }) => {
+function SneakerDetails({ sneaker }) {
   const [regionFilter, setRegionFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [entryMethodFilter, setEntryMethodFilter] = useState('');
@@ -19,15 +21,20 @@ const SneakerDetails = ({ sneaker }) => {
   });
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  const filteredRaffles = raffles.filter((raffle) => {
+  if (error) {
     return (
-      (regionFilter === '' || raffle.region === regionFilter) &&
-      (typeFilter === '' || raffle.type === typeFilter) &&
-      (entryMethodFilter === '' || raffle.entryMethod === entryMethodFilter)
+      <div>
+        Error:
+        {error.message}
+      </div>
     );
-  });
+  }
+
+  const filteredRaffles = raffles.filter((raffle) => (
+    (regionFilter === '' || raffle.region === regionFilter)
+      && (typeFilter === '' || raffle.type === typeFilter)
+      && (entryMethodFilter === '' || raffle.entryMethod === entryMethodFilter)
+  ));
 
   return (
     <div>
@@ -42,7 +49,10 @@ const SneakerDetails = ({ sneaker }) => {
             <FaTags className="text-yellow-600" />
             <p className="text-gray-700">{sneaker.brand}</p>
           </div>
-          <p className="text-gray-700">Release Date: {sneaker.releaseDate}</p>
+          <p className="text-gray-700">
+            Release Date:
+            {sneaker.releaseDate}
+          </p>
         </div>
       </div>
 
@@ -83,11 +93,26 @@ const SneakerDetails = ({ sneaker }) => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg text-gray-900">{raffle.name}</h4>
-                  <p className="text-gray-700">Region: {raffle.region}</p>
-                  <p className="text-gray-700">Type: {raffle.type}</p>
-                  <p className="text-gray-700">Entry Method: {raffle.entryMethod}</p>
-                  <p className="text-gray-700">Start Date: {raffle.startDate}</p>
-                  <p className="text-gray-700">End Date: {raffle.endDate}</p>
+                  <p className="text-gray-700">
+                    Region:
+                    {raffle.region}
+                  </p>
+                  <p className="text-gray-700">
+                    Type:
+                    {raffle.type}
+                  </p>
+                  <p className="text-gray-700">
+                    Entry Method:
+                    {raffle.entryMethod}
+                  </p>
+                  <p className="text-gray-700">
+                    Start Date:
+                    {raffle.startDate}
+                  </p>
+                  <p className="text-gray-700">
+                    End Date:
+                    {raffle.endDate}
+                  </p>
                 </div>
               </div>
             </li>
@@ -96,5 +121,5 @@ const SneakerDetails = ({ sneaker }) => {
       </div>
     </div>
   );
-};
+}
 export default SneakerDetails;

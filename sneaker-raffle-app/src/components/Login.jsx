@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
-const Login = () => {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -15,7 +15,7 @@ const Login = () => {
 
     try {
       await loginUser(email, password);
-      navigate("/");
+      navigate('/');
     } catch (err) {
       if (err.response.status === 403) {
         setError('Invalid email or password.');
@@ -59,6 +59,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Login;
