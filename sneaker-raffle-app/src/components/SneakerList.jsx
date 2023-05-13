@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Tilt from 'react-parallax-tilt';
 import SneakerDetails from './SneakerDetails';
 import api from '../api';
 import useUser from '../hooks/useUser';
+import bg from '../assets/bggg.jpg';
 
 const fetchSneakers = async () => {
-  const { data } = await api.get('/api/sneakers'); // Replace with your endpoint
+  const { data } = await api.get('/api/sneakers');
   return data;
 };
 
@@ -24,52 +27,51 @@ function SneakerList() {
   }
 
   return (
-  // <div className="bg-gray-900 rounded-lg shadow-2xl md:px-12 md:py-6 text-white">
     <div>
-      <h1 className="text-3xl font-bold mb-6 text-white">Upcoming Sneaker Releases</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div className="col-span-2 flex justify-center">
+          <h1 className="text-3xl font-bold mb-6 text-white">Upcoming Sneaker Releases</h1>
+        </div>
         {sneakers.map((sneaker) => (
-          // <div key={sneaker.id} className="rounded-lg shadow cursor-pointer hover:shadow-lg p-0.5 bg-gradient-to-r from-pink-500 to-yellow-500">
-          <div
-            // className="p-8 rounded-lg  transition-all bg-black hover:bg-black hover:scale-95 h-full rounded-lg shadow cursor-pointer hover:shadow-lg p-0.5 bg-gray-800"
-            className="p-8 rounded-lg cursor-pointer bg-gray-800"
-            onClick={() => setSelectedSneaker(sneaker)}
-          >
-            <img
-              src={sneaker.imageUrl || 'https://source.unsplash.com/random/200x200?hypebeast-sneakers'}
-              alt={sneaker.name}
-              className="w-full h-64 object-cover mb-6 rounded-lg"
-            />
-            <h3 className="text-2xl font-semibold mb-2 text-white">{sneaker.name}</h3>
-            <p id="product-code" className="text-white">
-              pd19-203
-            </p>
-            <p className="text-gray-500 mb-2">{sneaker.brand}</p>
-            <p id="Release Date" className="text-white">
 
-              {sneaker.releaseDate}
-            </p>
-            <p id="Price" className="text-white">
-              £180
-            </p>
-
-            <p id="likes" className="text-white">
-              likes
-              9
-            </p>
-            <p id="dislikes" className="text-white">
-              dislikes
-              9
-            </p>
-            <button type="submit" className="mt-6 bg-gradient-to-r from-pink-500 to-yellow-500 text-white font-bold py-2 px-4 rounded">
-              View
+          <div className="relative bg-gray-900 text-white overflow-hidden rounded-xl shadow-2xl flex">
+            <div className="w-1/2">
+              <img src="https://source.unsplash.com/random/200x200?hypebeast-sneakers" alt={sneaker.name} className="w-full h-full object-cover" />
+            </div>
+            <div className="w-1/2 p-6 md:p-10">
+              <h2 className="text-4xl font-bold mb-4">{sneaker.name}</h2>
+              <p className="text-xl mb-4">
+                Brand:
+                {' '}
+                {sneaker.brand}
+              </p>
+              <p className="text-xl mb-4">
+                Release Date:
+                {' '}
+                {sneaker.releaseDate}
+              </p>
+              <p className="text-2xl font-semibold mb-4">
+                Price:
+                {' '}
+                {sneaker.price ? `$${sneaker.price}` : 'N/A'}
+              </p>
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <i className="fas fa-thumbs-up text-green-500" />
+                  <span>{sneaker.thumbsUpCount}</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <i className="fas fa-thumbs-down text-red-500" />
+                  <span>{sneaker.thumbsDownCount}</span>
+                </div>
+              </div>
+            </div>
+            <div className="absolute top-0 right-0 bg-blue-500 text-black px-3 py-1 text-lg font-bold rounded-bl-md">
+              ID:
               {' '}
-              {numberOfRaffles}
-              {' '}
-              Raffles
-            </button>
+              {sneaker.id}
+            </div>
           </div>
-          // </div>
 
         ))}
       </div>
@@ -78,6 +80,7 @@ function SneakerList() {
           className="fixed inset-0 flex items-center justify-center z-50"
           onClick={() => setSelectedSneaker(null)}
         >
+
           <div className="bg-gray-800 text-white w-full max-w-2xl p-6 rounded-lg shadow-lg overflow-y-auto max-h-screen" onClick={(e) => e.stopPropagation()}>
             <button type="button" className="absolute top-4 right-4 text-gray-500 hover:text-gray-900" onClick={() => setSelectedSneaker(null)}>
               &times;
