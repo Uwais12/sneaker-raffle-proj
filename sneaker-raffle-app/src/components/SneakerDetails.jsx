@@ -4,21 +4,27 @@ import {
   FaGlobe, FaStore, FaLaptop, FaCalendarAlt, FaShoePrints, FaTags,
 } from 'react-icons/fa';
 import api from '../api';
+import useUser from '../hooks/useUser';
 
-const fetchRaffles = async (sneakerId) => {
-  const { data } = await api.get(`/api/raffles/sneaker/${sneakerId}`);
+const fetchRaffles = async (sneakerId, user) => {
+  const { data } = await api.get(`/api/raffles/sneaker/${sneakerId}`, {
+    ...(user && {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }),
+  });
+  console.log('THESE ', data);
   return data;
 };
 
 function SneakerDetails({ sneaker }) {
+  const { user } = useUser();
   const [regionFilter, setRegionFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [entryMethodFilter, setEntryMethodFilter] = useState('');
 
-  const { data: raffles, isLoading, error } = useQuery(['raffles', sneaker.id], () => fetchRaffles(sneaker.id), {
-    retry: 1,
-    refetchOnWindowFocus: false,
-  });
+  const { data: raffles, isLoading, error } = useQuery(['raffles', sneaker.id], () => fetchRaffles(sneaker.id, user));
 
   if (isLoading) return <div>Loading...</div>;
   if (error) {

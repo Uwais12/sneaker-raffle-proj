@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import MainContent from './MainContent';
 import Header from './components/Header';
-import './App.css';
 import { UserContextProvider } from './context/UserContext';
 
 const queryClient = new QueryClient();
@@ -16,15 +15,10 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <UserContextProvider>
         <BrowserRouter>
-          <div className="min-h-screen font-inter flex flex-col relative overflow-hidden">
-            <div className="z-10">
-              <Header />
-              <MainContent />
-            </div>
-            <div className="z-0 absolute inset-0 overflow-hidden">
-              <div className="h-full w-full bg-gradient-to-r from-purple-500 to-indigo-500 transform -skew-x-12" />
-            </div>
-            <footer className="z-10 bg-white border-t border-gray-200">
+          <div className="min-h-screen font-inter flex flex-col relative overflow-hidden bg-black">
+            <Header />
+            <MainContent />
+            <footer className="z-10 bg-gray-800 border-t border-gray-200 text-white">
               <div className="container mx-auto px-6 py-4">
                 <p className="text-center text-sm">&copy; 2023 Sneaker Raffles. All rights reserved.</p>
               </div>

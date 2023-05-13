@@ -1,64 +1,49 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
-  AiFillHome,
-  AiOutlineLogin,
-  AiOutlineUserAdd,
-  AiOutlineLogout,
-  AiOutlineInfoCircle,
+  AiFillHome, AiOutlineLogin, AiOutlineUserAdd, AiOutlineLogout, AiOutlineInfoCircle,
 } from 'react-icons/ai';
 import useUser from '../hooks/useUser';
 
 function Header() {
   const { user } = useUser();
+  // const navItemStyle = 'flex items-center text-white py-2 px-4 bg-gra
+  // dient-to-r from-pink-500 to-yellow-500 font-bold rounded hover:scale-105';
+  const navItemStyle = 'flex items-center text-white py-2 px-4 bg-gradient-to-r from-pink-500 to-yellow-500 font-bold rounded hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 hover:scale-105';
 
-  const navItemStyle = 'text-white hover:text-blue-300 transition-colors duration-200 transform hover:scale-105';
-  const headerStyle = 'bg-transparent shadow-md py-4 px-6';
+  const headerStyle = 'bg-black shadow-md py-4 px-6';
 
   return (
     <header className={headerStyle}>
       <nav className="container mx-auto px-4 flex items-center justify-between">
-        <div className="text-2xl font-bold text-white">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
-            Drip Drop
-          </span>
-        </div>
+        <NavLink to="/">
+
+          <div className="text-2xl font-bold text-white">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-yellow-500">
+              Drip Drop
+            </span>
+          </div>
+        </NavLink>
+        {console.log(user)}
+
         <ul className="flex space-x-4">
-          <li>
+          {/* <li>
             <NavLink to="/admin" className={navItemStyle}>
-              <AiOutlineInfoCircle />
-              {' '}
+              <AiOutlineInfoCircle className="mr-1" />
               Admin
             </NavLink>
-          </li>
-          <li>
-            <NavLink to="/" className={navItemStyle}>
-              <AiFillHome />
-              {' '}
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/about" className={navItemStyle}>
-              <AiOutlineInfoCircle />
-              {' '}
-              About
-            </NavLink>
-          </li>
-
+          </li> */}
           {!user && (
             <>
               <li>
                 <NavLink to="/login" className={navItemStyle}>
-                  <AiOutlineLogin />
-                  {' '}
+                  <AiOutlineLogin className="mr-1" />
                   Login
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/register" className={navItemStyle}>
-                  <AiOutlineUserAdd />
-                  {' '}
+                  <AiOutlineUserAdd className="mr-1" />
                   Register
                 </NavLink>
               </li>
@@ -73,14 +58,23 @@ function Header() {
               </li>
           )}
           {user && (
-            <li>
-              <NavLink to="/logout" className={navItemStyle}>
-                <AiOutlineLogout />
-                {' '}
-                Logout
-              </NavLink>
-            </li>
+            <>
+              <li>
+                <NavLink to="/profile" className={navItemStyle}>
+                  Profile
+                </NavLink>
+              </li>
+
+              <li>
+
+                <NavLink to="/logout" className={navItemStyle}>
+                  <AiOutlineLogout className="mr-1" />
+                  Logout
+                </NavLink>
+              </li>
+            </>
           )}
+
         </ul>
       </nav>
     </header>
