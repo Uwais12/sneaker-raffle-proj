@@ -1,5 +1,6 @@
 package com.sneakersite.sneaker.app.models
 
+import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.Entity
@@ -15,7 +16,8 @@ data class Sneaker(
         val brand: String="",
         val releaseDate: LocalDate=LocalDate.now(),
         val imageUrl: String="",
+//        val price: BigDecimal = BigDecimal.ZERO
 //        val productCode: String="",
 //        val thumbsUpCount: Int=0,
-//        val thumbsDownCount: Int=0
-)
+//        val thumbsDownCount: Int=0,
+        )
