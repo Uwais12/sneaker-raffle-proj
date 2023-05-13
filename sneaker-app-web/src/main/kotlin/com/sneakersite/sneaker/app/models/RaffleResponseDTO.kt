@@ -1,9 +1,8 @@
 package com.sneakersite.sneaker.app.models
 
 import java.time.LocalDateTime
-import javax.persistence.*
 
-data class RaffleWithEntered (
+data class RaffleResponseDTO (
     val id: Long ,
     val sneaker: Sneaker?,
     val name: String,
@@ -13,6 +12,7 @@ data class RaffleWithEntered (
     val startDate: LocalDateTime,
     val endDate: LocalDateTime,
     val isShipped: Boolean,
-    val url: String
+    val url: String,
+    val entered: Boolean = false
 
 )

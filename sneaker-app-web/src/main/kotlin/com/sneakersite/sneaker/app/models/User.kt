@@ -31,7 +31,7 @@ data class User(
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "raffle_id")]
     )
-    val rafflesEntered: Set<Raffle> = HashSet(),
+    val rafflesEntered: MutableSet<Raffle> = HashSet(),
 
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
@@ -65,3 +65,4 @@ data class User(
         return id.hashCode()
     }
 }
+

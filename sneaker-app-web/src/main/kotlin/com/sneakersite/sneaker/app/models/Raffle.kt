@@ -11,7 +11,6 @@ data class Raffle(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sneaker_id")
     val sneaker: Sneaker? = null,
-
     val name: String = "",
     val region: String = "",
     val type: String = "",

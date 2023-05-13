@@ -41,5 +41,11 @@ class SneakerController(private val sneakerService: SneakerService) {
         }
     }
 
+    @GetMapping("/raffle-counts")
+    fun getSneakerRaffleCounts(): ResponseEntity<Map<Long, Int>> {
+        val raffleCounts = sneakerService.getSneakerRaffleCounts()
+        return ResponseEntity.ok(raffleCounts)
+    }
+
     // Add more endpoints as needed, such as for updating or deleting sneakers
 }

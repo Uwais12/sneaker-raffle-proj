@@ -28,24 +28,24 @@ function SneakerList() {
       <h1 className="text-3xl font-bold mb-6 text-white">Upcoming Sneaker Releases</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {sneakers.map((sneaker) => (
-          <div key={sneaker.id} className="rounded-lg shadow cursor-pointer hover:shadow-lg p-0.5 bg-gradient-to-r from-pink-500 to-yellow-500">
-            <div
-              className="p-8 rounded-lg  transition-all bg-black hover:bg-black  hover:scale-95 h-full"
-              onClick={() => setSelectedSneaker(sneaker)}
-            >
-              <img
-                src={sneaker.imageUrl || 'https://source.unsplash.com/random/200x200?hypebeast-sneakers'}
-                alt={sneaker.name}
-                className="w-full h-64 object-cover mb-6 rounded-lg"
-              />
-              <h3 className="text-2xl font-semibold mb-2 text-white">{sneaker.name}</h3>
-              <p className="text-gray-500 mb-2">{sneaker.brand}</p>
-              <p className="text-white">
-                Release Date:
-                {sneaker.releaseDate}
-              </p>
-            </div>
+          // <div key={sneaker.id} className="rounded-lg shadow cursor-pointer hover:shadow-lg p-0.5 bg-gradient-to-r from-pink-500 to-yellow-500">
+          <div
+            className="p-8 rounded-lg  transition-all bg-black hover:bg-black hover:scale-95 h-full rounded-lg shadow cursor-pointer hover:shadow-lg p-0.5 bg-gray-800"
+            onClick={() => setSelectedSneaker(sneaker)}
+          >
+            <img
+              src={sneaker.imageUrl || 'https://source.unsplash.com/random/200x200?hypebeast-sneakers'}
+              alt={sneaker.name}
+              className="w-full h-64 object-cover mb-6 rounded-lg"
+            />
+            <h3 className="text-2xl font-semibold mb-2 text-white">{sneaker.name}</h3>
+            <p className="text-gray-500 mb-2">{sneaker.brand}</p>
+            <p className="text-white">
+              Release Date:
+              {sneaker.releaseDate}
+            </p>
           </div>
+          // </div>
 
         ))}
       </div>
