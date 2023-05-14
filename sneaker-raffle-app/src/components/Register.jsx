@@ -1,31 +1,38 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+import { useMutation } from 'react-query';
+import api from '../api';
 
 function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const { registerUser } = useAuth();
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
+  const mutation = useMutation(
+    () => api.post('/api/auth/register', { email, password }),
+    {
+      onSuccess: (data) => {
+        navigate('/login');
+      },
+      onError: (err) => {
+        setError('An error occurred. Please try again.');
+      },
+    },
+
+  );
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setError(null); // Clear any previous error
 
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
     }
 
-    try {
-      await registerUser(email, password);
-      navigate('/login');
-    } catch (err) {
-      console.log(err);
-      setError('Failed to create account.');
-    }
+    mutation.mutate();
   };
 
   return (

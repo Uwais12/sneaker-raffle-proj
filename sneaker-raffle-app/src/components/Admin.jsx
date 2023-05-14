@@ -1,10 +1,9 @@
 import React, {
-  useState, useEffect, useMemo, useRef,
+  useState, useMemo, useRef, useContext,
 } from 'react';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { AgGridReact } from 'ag-grid-react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import SneakerForm from './SneakerForm';
 import RaffleForm from './RaffleForm';
@@ -14,7 +13,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import '../grid-styles.css';
 
 import api from '../api';
-import useUser from '../hooks/useUser';
+import { UserContext } from '../context/UserContext';
 
 const fetchSneakers = async () => {
   const { data } = await api.get('/api/sneakers'); // Replace with your endpoint
@@ -49,23 +48,9 @@ function DeleteButtonRenderer({ data, onDelete }) {
 
 function Admin() {
   const queryClient = useQueryClient();
-  // const { data: sneakers } = useQuery('sneakers', fetchSneakers, {
-  //     onSuccess: () => {
-  //         sneakerGridRef.current.api.sizeColumnsToFit();
-  //     }
-  // });
   const { data: sneakers } = useQuery('sneakers', fetchSneakers);
-
-  // const { data: raffles } = useQuery('raffles', fetchRaffles, {
-  //     onSuccess: () => {
-  //         // raffleGridRef.current.api.sizeColumnsToFit();
-  //         return
-  //     }
-  // });
   const { data: raffles } = useQuery('raffles', fetchRaffles);
-
-  const navigate = useNavigate();
-  const { user } = useUser();
+  const { user } = useContext(UserContext);
   const sneakerGridRef = useRef(null);
   const raffleGridRef = useRef(null);
 

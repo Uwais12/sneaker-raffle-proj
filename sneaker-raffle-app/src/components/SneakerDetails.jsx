@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import {
-  FaGlobe, FaStore, FaLaptop, FaCalendarAlt, FaShoePrints, FaTags,
+  FaGlobe, FaStore, FaLaptop,
 } from 'react-icons/fa';
 import api from '../api';
-import useUser from '../hooks/useUser';
+import { UserContext } from '../context/UserContext';
 
 const fetchRaffles = async (sneakerId, user) => {
   const { data } = await api.get(`/api/raffles/sneaker/${sneakerId}`, {
@@ -14,12 +14,12 @@ const fetchRaffles = async (sneakerId, user) => {
       },
     }),
   });
-  console.log('THESE ', data);
+  console.log('raffles in sneaker card ', data);
   return data;
 };
 
-function SneakerDetails({ sneaker }) {
-  const { user } = useUser();
+function SneakerDetails({ sneaker, onClose }) {
+  const { user } = useContext(UserContext);
   const [regionFilter, setRegionFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [entryMethodFilter, setEntryMethodFilter] = useState('');
@@ -43,61 +43,96 @@ function SneakerDetails({ sneaker }) {
   ));
 
   return (
-    <div>
-      <div className="flex items-center space-x-4">
-        <img src={sneaker.imageUrl} alt={sneaker.name} className="w-32 h-32 object-cover rounded-xl shadow" />
-        <div className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <FaShoePrints className="text-blue-600" />
-            <h2 className="text-3xl font-bold text-gray-900">{sneaker.name}</h2>
+    <div className="overflow-hidden flex">
+      <div className="w-1/3 bg-black text-white">
+        <div className="relative flex flex-col overflow-hidden h-full">
+          <div className="relative">
+            <img
+              src={sneaker.image || 'https://source.unsplash.com/random/200x200?hypebeast-sneakers'}
+              alt="sneaker"
+              className="w-full object-cover fadeimg"
+            />
           </div>
-          <div className="flex items-center space-x-2">
-            <FaTags className="text-yellow-600" />
-            <p className="text-gray-700">{sneaker.brand}</p>
+          <div className="px-6">
+            <h2 className="text-2xl font-bold ">{sneaker.name}</h2>
+            <p className="text-md mb-3 text-slate-400">
+              {sneaker.brand}
+            </p>
+            <span className="text-2xl mb-4 grad-text font-bold w-auto">
+              {sneaker.price ? `$${sneaker.price}` : '£100'}
+            </span>
+
           </div>
-          <p className="text-gray-700">
-            Release Date:
-            {sneaker.releaseDate}
-          </p>
         </div>
       </div>
+      <div className="w-2/3">
+        <div className="px-6 py-2 border-2 rounded-lg m-2 border-black">
+          <div className="flex justify-between bg-green">
+            <div className="flex flex-col align-middle justify-center items-center">
+              <div>Type</div>
+              <div className="flex space-x-[-8px]  ">
+                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105 hover:font-bold mx-auto">
+                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
+                </div>
 
-      <div className="space-y-6">
-        <h3 className="text-2xl font-bold text-gray-900">Raffles:</h3>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="relative">
-            <FaGlobe className="absolute top-2 left-2 text-blue-400" />
-            <select value={regionFilter} onChange={(e) => setRegionFilter(e.target.value)} className="border border-blue-300 rounded-md p-2 pl-8 w-full">
-              <option value="">Filter by region</option>
-              <option value="US">US</option>
-            </select>
-          </div>
+                <div className="w-10 h-10 rounded-full flex justify-center bg-white/40 font-bold items-center">EU</div>
 
-          <div className="relative">
-            <FaStore className="absolute top-2 left-2 text-green-400" />
-            <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="border border-green-300 rounded-md p-2 pl-8 w-full">
-              <option value="">Filter by type</option>
-              <option value="Online">Online</option>
-            </select>
-          </div>
+                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
+                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
+                </div>
 
-          <div className="relative">
-            <FaLaptop className="absolute top-2 left-2 text-purple-400" />
-            <select value={entryMethodFilter} onChange={(e) => setEntryMethodFilter(e.target.value)} className="border border-purple-300 rounded-md p-2 pl-8 w-full">
-              <option value="">Filter by entry method</option>
-              <option value="Website">Website</option>
-            </select>
+              </div>
+            </div>
+            <div className="flex flex-col align-middle justify-center items-center">
+              <div>Type</div>
+              <div className="flex space-x-[-8px] ">
+                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105 hover:font-bold mx-auto">
+                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
+                </div>
+
+                <div className="w-10 h-10 rounded-full flex justify-center bg-white/40 font-bold items-center">EU</div>
+
+                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
+                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
+                </div>
+                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
+                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
+                </div>
+                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
+                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
+                </div>
+
+              </div>
+            </div>
+            <div className="flex flex-col align-middle justify-center items-center">
+              <div>Type</div>
+              <div className="flex space-x-[-8px] ">
+                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105 hover:font-bold mx-auto">
+                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
+                </div>
+
+                <div className="w-10 h-10 rounded-full flex justify-center bg-white/40 font-bold items-center">EU</div>
+
+                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
+                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
+                </div>
+                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
+                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
+                </div>
+                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
+                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
+                </div>
+
+              </div>
+            </div>
+
           </div>
         </div>
-
-        <ul className="space-y-4">
+        <ul className="overflow-y-auto max-h-96">
           {filteredRaffles.map((raffle) => (
-            <li key={raffle.id} className="border border-gray-200 rounded-lg p-4 shadow hover:shadow-lg transition-all">
-              <div className="flex items-start space-x-4">
-                <div className="w-8">
-                  <FaCalendarAlt className="text-gray-400" />
-                </div>
-                <div>
+            <li key={raffle.id} className="mt-0.5">
+              <div className="p-4 bg-white/10 flex justify-between">
+                <div className="">
                   <h4 className="font-semibold text-lg text-gray-900">{raffle.name}</h4>
                   <p className="text-gray-700">
                     Region:
@@ -120,12 +155,16 @@ function SneakerDetails({ sneaker }) {
                     {raffle.endDate}
                   </p>
                 </div>
+                <div className="">
+                  go to raffle !
+                </div>
               </div>
             </li>
           ))}
         </ul>
       </div>
     </div>
+
   );
 }
 export default SneakerDetails;

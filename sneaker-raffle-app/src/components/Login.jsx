@@ -1,28 +1,41 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+import { useMutation } from 'react-query';
+import { UserContext } from '../context/UserContext';
+import api from '../api';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const { loginUser } = useAuth();
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { setUser, setToken } = useContext(UserContext);
+
+  const mutation = useMutation(
+    () => api.post('/api/auth/login', { email, password }),
+    {
+      onSuccess: (data) => {
+        console.log('Login response - ', data);
+        setUser(data.data.user);
+        setToken(data.data.token);
+        navigate('/');
+      },
+      onError: (err) => {
+        // Handle error
+        if (err.response && err.response.status === 401) {
+          setError('Invalid email or password');
+        } else {
+          setError('An error occurred. Please try again.');
+        }
+      },
+
+    },
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-
-    try {
-      await loginUser(email, password);
-      navigate('/');
-    } catch (err) {
-      if (err.response.status === 403) {
-        setError('Invalid email or password.');
-      } else {
-        setError('An error occurred while logging in. Please try again.');
-      }
-    }
+    setError(null);
+    mutation.mutate();
   };
 
   return (

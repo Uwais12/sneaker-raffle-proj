@@ -4,16 +4,16 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import MainContent from './MainContent';
+import MainContent from './components/MainContent';
 import Header from './components/Header';
-import { UserContextProvider } from './context/UserContext';
+import { UserProvider } from './context/UserContext';
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <UserContextProvider>
+      <UserProvider>
         <BrowserRouter>
           <div className="min-h-screen font-inter flex flex-col relative overflow-hidden bg-black">
             <Header />
@@ -26,7 +26,7 @@ function App() {
           </div>
         </BrowserRouter>
         <ToastContainer />
-      </UserContextProvider>
+      </UserProvider>
     </QueryClientProvider>
   );
 }

@@ -1,15 +1,9 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import useUser from '../hooks/useUser';
+import React, { useContext } from 'react';
 import Raffle from './Raffle';
+import { UserContext } from '../context/UserContext';
 
 function Profile() {
-  const { user } = useUser();
-  const navigate = useNavigate();
-
-  if (!user) {
-    return <div>Please log in to view your profile.</div>;
-  }
+  const { user } = useContext(UserContext);
 
   return (
     <div className="white bg-white">

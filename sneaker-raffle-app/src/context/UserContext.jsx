@@ -1,44 +1,49 @@
 import React, {
-  createContext, useContext, useState, useEffect, useMemo,
+  createContext, useState, useEffect, useMemo,
 } from 'react';
 
-const UserContext = createContext();
+export const UserContext = createContext();
 
-function UserContextProvider({ children }) {
+export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState('');
 
+  // On mount, read the user and token from local storage
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    const tokenFromStorage = localStorage.getItem('token');
+    const userFromStorage = JSON.parse(localStorage.getItem('user')); // Parse the user data since it is stored as a string
+
+    if (tokenFromStorage) {
+      setToken(tokenFromStorage);
+    }
+
+    if (userFromStorage) {
+      setUser(userFromStorage);
     }
   }, []);
 
-  const saveUser = (userData) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
-  };
+  // Whenever the token or user changes, save it to local storage
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('token', token);
+    } else {
+      localStorage.removeItem('token');
+    }
 
-  const removeUser = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-  };
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user)); // Stringify the user data to store in local storage
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [token, user]);
 
-  const contextValue = useMemo(() => ({ user, saveUser, removeUser }), [user]);
+  const value = useMemo(() => ({
+    user, setUser, token, setToken,
+  }), [user, setUser, token, setToken]);
 
   return (
-    <UserContext.Provider value={contextValue}>
+    <UserContext.Provider value={value}>
       {children}
     </UserContext.Provider>
   );
 }
-
-const useUserContext = () => {
-  const context = useContext(UserContext);
-  if (!context) {
-    throw new Error('useUserContext must be used within a UserContextProvider');
-  }
-  return context;
-};
-
-export { UserContextProvider, useUserContext };

@@ -1,30 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
-  AiFillHome, AiOutlineLogin, AiOutlineUserAdd, AiOutlineLogout, AiOutlineInfoCircle,
+  AiOutlineLogin, AiOutlineUserAdd, AiOutlineLogout,
 } from 'react-icons/ai';
-import useUser from '../hooks/useUser';
+import { UserContext } from '../context/UserContext';
 
 function Header() {
-  const { user } = useUser();
+  const { user } = useContext(UserContext);
+  console.log(user, 'userrrrrrrr');
   // const navItemStyle = 'flex items-center text-white py-2 px-4 bg-gra
   // dient-to-r from-pink-500 to-yellow-500 font-bold rounded hover:scale-105';
-  const navItemStyle = 'flex items-center text-white py-2 px-4 bg-gradient-to-r from-pink-500 to-yellow-500 font-bold rounded hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 hover:scale-105';
+  const navItemStyle = 'flex items-center text-white py-2 px-4 bg-gradient-to-r from-pink-500 to-yellow-500 font-bold rounded hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 hover:scale-105 my-gradient-div';
 
   const headerStyle = 'bg-black shadow-md py-4 px-6';
 
   return (
     <header className={headerStyle}>
-      <nav className="container mx-auto px-4 flex items-center justify-between">
+      <nav className="container w-full px-4 flex items-center justify-between">
         <NavLink to="/">
 
-          <div className="text-2xl font-bold text-white">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-yellow-500">
+          <div className="text-2xl font-bold text-white hover:scale-110">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-yellow-500 grad-text">
               Drip Drop
             </span>
           </div>
         </NavLink>
-        {console.log(user)}
 
         <ul className="flex space-x-4">
           {/* <li>

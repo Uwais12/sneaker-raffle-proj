@@ -1,16 +1,34 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { useMutation } from 'react-query';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+import { UserContext } from '../context/UserContext';
+import api from '../api';
 
 function Logout() {
   const navigate = useNavigate();
-  const { logoutUser } = useAuth();
+
+  const {
+    setUser, token, setToken,
+  } = useContext(UserContext);
+
+  const logoutMutation = useMutation(() => api.post('/api/auth/logout', {}, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }), {
+    onSuccess: () => {
+      setUser(null);
+      setToken('');
+      navigate('/'); // Move navigation here to ensure it only happens once
+    },
+  });
 
   useEffect(() => {
-    logoutUser().then(() => {
-      navigate('/');
-    });
-  }, [logoutUser, navigate]);
+    if (token) {
+      logoutMutation.mutate();
+    }
+  }, [token]); // Remove logoutMutation from dependencies
 
   return null;
 }

@@ -4,8 +4,10 @@ import heroImage from '../assets/hero.jpg';
 function Hero() {
   return (
     <>
+      <hr className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 h-1 w-full border-0 my-gradient-div" />
+
       <section
-        className="text-white bg-cover bg-center py-48 px-12 flex flex-col items-center justify-center"
+        className="text-white bg-cover bg-center py-36 px-12 flex flex-col items-center justify-center"
         style={{
           backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${heroImage})`,
         }}
@@ -20,7 +22,7 @@ function Hero() {
         </div>
 
       </section>
-      <hr className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 h-1 w-full" />
+      <hr className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 h-1 w-full border-0 my-gradient-div" />
     </>
   );
 }
