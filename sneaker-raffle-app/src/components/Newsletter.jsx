@@ -16,7 +16,7 @@ function Newsletter() {
   };
 
   return (
-    <section className="bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 text-white py-12 px-6">
+    <section className="my-gradient-div text-white py-12 px-6">
       <h2 className="text-3xl font-bold mb-4">Subscribe to our Newsletter</h2>
       <p className="mb-4">Stay updated with the latest sneaker releases and raffles, subscribe to our newsletter.</p>
       <form onSubmit={handleSubmit} className="flex justify-between md:justify-start">

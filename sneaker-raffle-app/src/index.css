@@ -307,3 +307,32 @@ code {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.dashed-line {
+  height: 1px;
+  width: 100%;
+  background-image: linear-gradient(to right, black 50%, transparent 50%);
+  background-size: 20px 100%;
+  animation: dash 2s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    background-position: 20px 0;
+  }
+}
+
+.img {
+  /* width: 10em; */
+  height: 100%;
+  /* padding-left: 100%; */
+
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.square {
+  width: 100%;
+  aspect-ratio: 1;
+}

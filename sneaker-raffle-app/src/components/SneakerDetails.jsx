@@ -1,10 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
+import axios from 'axios';
 import {
   FaGlobe, FaStore, FaLaptop,
+
 } from 'react-icons/fa';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { ReactTinyLink } from 'react-tiny-link';
 import api from '../api';
+
 import { UserContext } from '../context/UserContext';
+import LineComponent from './Line';
+import LinkPreviewComponent from './LinkPreview';
+import RaffleCard from './RaffleCard';
 
 const fetchRaffles = async (sneakerId, user) => {
   const { data } = await api.get(`/api/raffles/sneaker/${sneakerId}`, {
@@ -19,6 +28,9 @@ const fetchRaffles = async (sneakerId, user) => {
 };
 
 function SneakerDetails({ sneaker, onClose }) {
+  const circleStyle = 'w-10 h-10 rounded-full flex justify-center items-center bg-gray-500 border-2 border-black text-white hover:scale-110 hover:font-bold hover:cursor-pointer hover:bg-white hover:text-gray-500';
+  const longStyle = 'w-20 h-10 rounded-full flex justify-center items-center bg-gray-500 border-2 border-black text-white hover:scale-110 hover:font-bold hover:cursor-pointer hover:bg-white hover:text-gray-500';
+
   const { user } = useContext(UserContext);
   const [regionFilter, setRegionFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
@@ -66,62 +78,32 @@ function SneakerDetails({ sneaker, onClose }) {
         </div>
       </div>
       <div className="w-2/3">
-        <div className="px-6 py-2 border-2 rounded-lg m-2 border-black">
-          <div className="flex justify-between bg-green">
+        <div className="px-6 py-2 rounded-lg m-2 bg-black text-white">
+          <div className="flex justify-between">
+            <div className="flex flex-col align-middle justify-center items-center">
+              <div>Region</div>
+
+              <div className="flex space-x-[-8px]  ">
+                <div className={circleStyle}>EU</div>
+                <div className={circleStyle}>UK</div>
+                <div className={circleStyle}>US</div>
+                <div className={circleStyle}>WW</div>
+
+              </div>
+            </div>
             <div className="flex flex-col align-middle justify-center items-center">
               <div>Type</div>
               <div className="flex space-x-[-8px]  ">
-                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105 hover:font-bold mx-auto">
-                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
-                </div>
-
-                <div className="w-10 h-10 rounded-full flex justify-center bg-white/40 font-bold items-center">EU</div>
-
-                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
-                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
-                </div>
+                <div className={longStyle}>Social</div>
+                <div className={longStyle}>Online</div>
 
               </div>
             </div>
             <div className="flex flex-col align-middle justify-center items-center">
-              <div>Type</div>
-              <div className="flex space-x-[-8px] ">
-                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105 hover:font-bold mx-auto">
-                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
-                </div>
-
-                <div className="w-10 h-10 rounded-full flex justify-center bg-white/40 font-bold items-center">EU</div>
-
-                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
-                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
-                </div>
-                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
-                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
-                </div>
-                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
-                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
-                </div>
-
-              </div>
-            </div>
-            <div className="flex flex-col align-middle justify-center items-center">
-              <div>Type</div>
-              <div className="flex space-x-[-8px] ">
-                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105 hover:font-bold mx-auto">
-                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
-                </div>
-
-                <div className="w-10 h-10 rounded-full flex justify-center bg-white/40 font-bold items-center">EU</div>
-
-                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
-                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
-                </div>
-                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
-                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
-                </div>
-                <div className="bg-black/50 w-10 h-10 rounded-full hover:scale-105">
-                  <div className="w-10 h-10 rounded-full bg-black/50 flex justify-center items-center border-2 border-zinc-500 text-zinc-500 text-md gradtcircle">EU</div>
-                </div>
+              <div>Shipping</div>
+              <div className="flex space-x-[-8px]  ">
+                <div className={longStyle}>In-store</div>
+                <div className={longStyle}>Shipping</div>
 
               </div>
             </div>
@@ -131,34 +113,7 @@ function SneakerDetails({ sneaker, onClose }) {
         <ul className="overflow-y-auto max-h-96">
           {filteredRaffles.map((raffle) => (
             <li key={raffle.id} className="mt-0.5">
-              <div className="p-4 bg-white/10 flex justify-between">
-                <div className="">
-                  <h4 className="font-semibold text-lg text-gray-900">{raffle.name}</h4>
-                  <p className="text-gray-700">
-                    Region:
-                    {raffle.region}
-                  </p>
-                  <p className="text-gray-700">
-                    Type:
-                    {raffle.type}
-                  </p>
-                  <p className="text-gray-700">
-                    Entry Method:
-                    {raffle.entryMethod}
-                  </p>
-                  <p className="text-gray-700">
-                    Start Date:
-                    {raffle.startDate}
-                  </p>
-                  <p className="text-gray-700">
-                    End Date:
-                    {raffle.endDate}
-                  </p>
-                </div>
-                <div className="">
-                  go to raffle !
-                </div>
-              </div>
+              <RaffleCard raffle={raffle} />
             </li>
           ))}
         </ul>

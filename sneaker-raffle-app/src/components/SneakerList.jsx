@@ -73,7 +73,6 @@ function SneakerList() {
               type="button"
               className="cool-button text-2xl font-bold"
               onClick={() => { setSelectedSneaker(sneaker); document.body.style.overflow = 'hidden'; }}
-
             >
               Click to view
               {' '}
