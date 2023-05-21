@@ -45,5 +45,6 @@ jobs:
 
       - name: Deploy to Google Cloud Run
         run: |
-          gcloud run deploy sneaker-app-web --image ghcr.io/${{ steps.init.outputs.owner }}/sneaker_raffle_proj/sneaker-app-web:latest --platform managed --region us-central1 --allow-unauthenticated
-          gcloud run deploy sneaker-raffle-app --image ghcr.io/${{ steps.init.outputs.owner }}/sneaker_raffle_proj/sneaker-raffle-app:latest --platform managed --region us-central1 --allow-unauthenticated
+          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+          gcloud run deploy sneaker-app-web --image ghcr.io/${{ github.repository_owner }}/sneaker_raffle_proj/sneaker-app-web:latest --platform managed --region us-central1 --allow-unauthenticated
+          gcloud run deploy sneaker-raffle-app --image ghcr.io/${{ github.repository_owner }}/sneaker_raffle_proj/sneaker-raffle-app:latest --platform managed --region us-central1 --allow-unauthenticated
