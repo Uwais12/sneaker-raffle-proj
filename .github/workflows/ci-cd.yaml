@@ -35,7 +35,7 @@ jobs:
           tags: ghcr.io/${{ github.repository }}/sneaker-raffle-app:latest
 
       - name: Setup gcloud CLI
-        uses: google-github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@main
         with:
           service_account_key: ${{ secrets.GCLOUD_AUTH }}
 
