@@ -25,14 +25,14 @@ jobs:
         with:
           context: ./sneaker-app-web
           push: true
-          tags: ghcr.io/${{ github.repository }}/sneaker-app-web:latest
+          tags: ghcr.io/${{ github.repository_owner }}/sneaker-raffle-proj/sneaker-app-web:latest
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v2
         with:
           context: ./sneaker-raffle-app
           push: true
-          tags: ghcr.io/${{ github.repository }}/sneaker-raffle-app:latest
+          tags: ghcr.io/${{ github.repository_owner }}/sneaker-raffle-proj/sneaker-raffle-app:latest
 
       - name: Setup gcloud CLI
         uses: google-github-actions/setup-gcloud@main
