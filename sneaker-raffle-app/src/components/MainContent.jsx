@@ -48,7 +48,7 @@ function MainContent() {
             <Route
               path="/admin"
               element={(
-                <ProtectedWrapper requiredRole="ROLE_USER">
+                <ProtectedWrapper requiredRole="ROLE_ADMIN">
                   <Admin />
                 </ProtectedWrapper>
                           )}

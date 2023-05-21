@@ -20,9 +20,8 @@ class RaffleService(private val raffleRepository: RaffleRepository, private val 
         }
         val raffle = Raffle(
                 sneaker = sneaker,
-                name = raffleDTO.name,
+                shopName = raffleDTO.name,
                 region = raffleDTO.region,
-                type = raffleDTO.type,
                 entryMethod = raffleDTO.entryMethod,
                 startDate = raffleDTO.startDate,
                 endDate = raffleDTO.endDate,

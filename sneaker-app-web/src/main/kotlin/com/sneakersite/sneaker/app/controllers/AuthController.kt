@@ -1,7 +1,7 @@
 package com.sneakersite.sneaker.app.controllers
-
 import com.sneakersite.sneaker.app.models.Role
 import com.sneakersite.sneaker.app.models.User
+import com.sneakersite.sneaker.app.security.CustomUserDetailsService
 import com.sneakersite.sneaker.app.services.RoleService
 import com.sneakersite.sneaker.app.services.UserService
 import com.sneakersite.sneaker.app.security.JwtUtil
@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -21,7 +22,8 @@ class AuthController(
         private val authenticationManager: AuthenticationManager,
         private val userService: UserService,
         private val roleService: RoleService,
-        private val passwordEncoder: BCryptPasswordEncoder
+        private val passwordEncoder: BCryptPasswordEncoder,
+        private val customUserDetailsService: CustomUserDetailsService
 ) {
 
     @PostMapping("/register")
@@ -50,12 +52,20 @@ class AuthController(
 
     @PostMapping("/login")
     fun authenticateUser(@RequestBody loginRequest: LoginRequest): ResponseEntity<AuthenticationResponse> {
-        val authentication = authenticationManager.authenticate(
-                UsernamePasswordAuthenticationToken(loginRequest.email, loginRequest.password)
+        val authentication: Authentication = authenticationManager.authenticate(
+                UsernamePasswordAuthenticationToken(
+                        loginRequest.email,
+                        loginRequest.password
+                )
         )
+
         SecurityContextHolder.getContext().authentication = authentication
-        val jwtToken = jwtUtil.generateToken(authentication.principal as UserDetails)
-        return ResponseEntity.ok(AuthenticationResponse(jwtToken))
+
+        val user: UserDetails = customUserDetailsService.loadUserByUsername(loginRequest.email)
+        val jwt: String = jwtUtil.generateToken(authentication.principal as UserDetails)
+        val userResp: UserDTO = UserDTO(user.username, user.authorities.map { it.authority })
+        val response = AuthenticationResponse(jwt, userResp)
+        return ResponseEntity.ok(response)
     }
 
     @PostMapping("/logout")
@@ -67,10 +77,15 @@ class AuthController(
 
 data class RegistrationRequest(val email: String, val password: String)
 data class LoginRequest(val email: String, val password: String)
-data class AuthenticationResponse(val token: String)
+data class AuthenticationResponse(val token: String, val user: UserDTO)
 
 data class RegistrationResponse(
         val id: Long,
         val email: String,
         val roles: Set<Role>
+)
+
+data class UserDTO(
+        val email: String,
+        val roles: List<String>
 )

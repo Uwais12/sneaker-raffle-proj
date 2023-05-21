@@ -7,7 +7,6 @@ data class RaffleResponseDTO (
     val sneaker: Sneaker?,
     val name: String,
     val region: String ,
-    val type: String,
     val entryMethod: String,
     val startDate: LocalDateTime,
     val endDate: LocalDateTime,

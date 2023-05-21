@@ -12,7 +12,8 @@ export function UserProvider({ children }) {
   useEffect(() => {
     const tokenFromStorage = localStorage.getItem('token');
     const userFromStorage = JSON.parse(localStorage.getItem('user')); // Parse the user data since it is stored as a string
-
+    // eslint-disable-next-line no-debugger
+    // debugger;
     if (tokenFromStorage) {
       setToken(tokenFromStorage);
     }
@@ -24,6 +25,8 @@ export function UserProvider({ children }) {
 
   // Whenever the token or user changes, save it to local storage
   useEffect(() => {
+    // eslint-disable-next-line no-debugger
+    debugger;
     if (token) {
       localStorage.setItem('token', token);
     } else {

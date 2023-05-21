@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.*
 class SneakerController(private val sneakerService: SneakerService) {
 
     @GetMapping
-    fun getAllSneakers(): ResponseEntity<List<Sneaker>> {
-        val sneakers = sneakerService.getAllSneakers()
+    fun getAllSneakers(
+            @RequestParam(name = "sortBy", required = false, defaultValue = "releaseDate") sortBy: String,
+            @RequestParam(name = "showSneakersWithoutRaffles", required = false, defaultValue = "false") showSneakersWithoutRaffles: Boolean,
+            @RequestParam(name = "showSneakersWithActiveRafflesOnly", required = false, defaultValue = "true") showSneakersWithActiveRafflesOnly: Boolean
+    ): ResponseEntity<List<Sneaker>> {
+        val sneakers = sneakerService.getAllSneakers(sortBy, showSneakersWithoutRaffles, showSneakersWithActiveRafflesOnly)
         return ResponseEntity.ok(sneakers)
     }
 

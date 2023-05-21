@@ -19,13 +19,14 @@ function Logout() {
   }), {
     onSuccess: () => {
       setUser(null);
-      setToken('');
-      navigate('/'); // Move navigation here to ensure it only happens once
     },
   });
 
   useEffect(() => {
     if (token) {
+      setToken('');
+      navigate('/'); // Move navigation here to ensure it only happens once
+
       logoutMutation.mutate();
     }
   }, [token]); // Remove logoutMutation from dependencies

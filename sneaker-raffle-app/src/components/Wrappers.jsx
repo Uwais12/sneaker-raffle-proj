@@ -16,9 +16,11 @@ export function PublicOnlyWrapper({ children }) {
 }
 
 export function ProtectedWrapper({ children, requiredRole }) {
-  const { user } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
+  console.log(user, token);
   const navigate = useNavigate();
-
+  // eslint-disable-next-line no-debugger
+  debugger;
   useEffect(() => {
     if (!user || !user.roles.includes(requiredRole)) {
       navigate('/login');

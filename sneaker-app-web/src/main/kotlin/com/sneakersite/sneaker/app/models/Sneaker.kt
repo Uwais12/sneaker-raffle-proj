@@ -16,8 +16,9 @@ data class Sneaker(
         val brand: String="",
         val releaseDate: LocalDate=LocalDate.now(),
         val imageUrl: String="",
-//        val price: BigDecimal = BigDecimal.ZERO
-//        val productCode: String="",
-//        val thumbsUpCount: Int=0,
-//        val thumbsDownCount: Int=0,
+        val price: BigDecimal = BigDecimal.ZERO,
+        val productCode: String="",
+        val thumbsUpCount: Int=0,
+        val thumbsDownCount: Int=0,
+        val colourway: String = ""
         )

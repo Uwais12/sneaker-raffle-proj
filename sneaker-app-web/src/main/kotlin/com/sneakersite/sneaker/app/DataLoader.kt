@@ -48,9 +48,8 @@ class DataLoader(
         val raffle1 = Raffle(
             id = 0L,
             sneaker = savedSneaker1,
-            name = "Raffle 1",
+            shopName = "Raffle 1",
             region = "US",
-            type = "Online",
             entryMethod = "Email",
             startDate = LocalDateTime.of(2023, 5, 20, 0, 0),
             endDate = LocalDateTime.of(2023, 5, 25, 0, 0),
@@ -61,9 +60,8 @@ class DataLoader(
         val raffle2 = Raffle(
             id = 1L,
             sneaker = savedSneaker2,
-            name = "Raffle 2",
+            shopName = "Raffle 2",
             region = "UK",
-            type = "In-store",
             entryMethod = "Purchase",
             startDate = LocalDateTime.of(2023, 5, 22, 0, 0),
             endDate = LocalDateTime.of(2023, 5, 24, 0, 0),

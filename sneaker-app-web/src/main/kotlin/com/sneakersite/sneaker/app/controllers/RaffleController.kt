@@ -49,7 +49,7 @@ class RaffleController(
         val user = jwtToken?.let { token -> userService.findByEmail(jwtUtil.getUsernameFromToken(token)) }
         val raffleDTOList = raffles.map { raffle ->
             val entered = user?.rafflesEntered?.contains(raffle) ?: false
-            RaffleResponseDTO(raffle.id, raffle.sneaker, raffle.name, raffle.region, raffle.type, raffle.entryMethod, raffle.startDate, raffle.endDate, raffle.isShipped, raffle.url, entered)
+            RaffleResponseDTO(raffle.id, raffle.sneaker, raffle.shopName, raffle.region, raffle.entryMethod, raffle.startDate, raffle.endDate, raffle.isShipped, raffle.url, entered)
         }
         return ResponseEntity.ok(raffleDTOList)
     }

@@ -5,7 +5,6 @@ data class RaffleDTO(
         val sneakerId: Long,
         val name: String = "",
         val region: String = "",
-        val type: String = "",
         val entryMethod: String = "",
         val startDate: LocalDateTime = LocalDateTime.now(),
         val endDate: LocalDateTime = LocalDateTime.now(),
