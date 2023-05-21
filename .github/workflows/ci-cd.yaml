@@ -38,13 +38,13 @@ jobs:
           push: true
           tags: ghcr.io/${{ steps.init.outputs.owner }}/sneaker_raffle_proj/sneaker-raffle-app:latest
 
-      - name: Setup gcloud CLI
-        uses: google-github-actions/setup-gcloud@main
-        with:
-          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+      - name: Authenticate to Google Cloud
+        run: echo '${{ secrets.GCP_SA_KEY }}' | gcloud auth activate-service-account --key-file=-
+
+      - name: Set Google Cloud Project
+        run: gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
       - name: Deploy to Google Cloud Run
         run: |
-          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
           gcloud run deploy sneaker-app-web --image ghcr.io/${{ github.repository_owner }}/sneaker_raffle_proj/sneaker-app-web:latest --platform managed --region us-central1 --allow-unauthenticated
           gcloud run deploy sneaker-raffle-app --image ghcr.io/${{ github.repository_owner }}/sneaker_raffle_proj/sneaker-raffle-app:latest --platform managed --region us-central1 --allow-unauthenticated
