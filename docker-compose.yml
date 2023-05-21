@@ -1,0 +1,29 @@
+version: '3'
+services:
+  sneaker-app-web:
+    build:
+      context: ./sneaker-app-web
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/sneaker_raffles
+    ports:
+      - "8080:8080"
+
+  sneaker-raffle-app:
+    build:
+      context: ./sneaker-raffle-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: sneaker_raffles
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data: {}
