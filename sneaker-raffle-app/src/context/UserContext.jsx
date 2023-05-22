@@ -25,8 +25,6 @@ export function UserProvider({ children }) {
 
   // Whenever the token or user changes, save it to local storage
   useEffect(() => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     if (token) {
       localStorage.setItem('token', token);
     } else {
