@@ -8,7 +8,7 @@ name: Backend CI/CD
 #   pull_request:
 #     branches: [master]
 #     paths:
-#       - "sneaker-app-web/**"
+#       - "sneaker-app-web/**"a
 
 on: [push]
 
