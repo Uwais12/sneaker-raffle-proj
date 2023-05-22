@@ -53,5 +53,5 @@ jobs:
               --region ${{ secrets.GCP_REGION }} \
               --allow-unauthenticated \
               --add-cloudsql-instances ${{ secrets.CLOUD_SQL_INSTANCE_NAME }} \
-              --set-env-vars SPRING_DATASOURCE_URL=jdbc:postgresql:///sneaker_raffles?cloudSqlInstance=${{ secrets.CLOUD_SQL_INSTANCE_NAME }}&socketFactory=com.google.cloud.sql.postgres.SocketFactory,SPRING_DATASOURCE_USERNAME=${{ secrets.POSTGRES_USER }},SPRING_DATASOURCE_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+              --set-env-vars SPRING_DATASOURCE_URL=jdbc:postgresql:///sneaker_raffles?cloudSqlInstance=${{ secrets.CLOUD_SQL_INSTANCE_NAME }}&socketFactory=com.google.cloud.sql.postgres.SocketFactory,SPRING_DATASOURCE_USERNAME=${{ secrets.POSTGRES_USER }},SPRING_DATASOURCE_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
               --service-account github-actions@rich-tea-387404.iam.gserviceaccount.com

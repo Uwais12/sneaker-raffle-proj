@@ -50,5 +50,5 @@ jobs:
               --image ${{ secrets.GCR_REGISTRY }}/sneaker-raffle-app:latest \
               --platform managed \
               --region ${{ secrets.GCP_REGION }} \
-              --allow-unauthenticated
+              --allow-unauthenticated \
               --service-account github-actions@rich-tea-387404.iam.gserviceaccount.com
