@@ -47,10 +47,12 @@ jobs:
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy sneaker-app-web \
-              --image ${{ secrets.GCR_REGISTRY }}/sneaker-app-web:latest \
-              --platform managed \
-              --region ${{ secrets.GCP_REGION }} \
-              --allow-unauthenticated \
-              --add-cloudsql-instances ${{ secrets.CLOUD_SQL_INSTANCE_NAME }} \
-              --service-account github-actions@rich-tea-387404.iam.gserviceaccount.com \
-              --set-env-vars SPRING_DATASOURCE_URL=jdbc:postgresql:///sneaker_raffles?cloudSqlInstance=${{ secrets.CLOUD_SQL_INSTANCE_NAME }}&socketFactory=com.google.cloud.sql.postgres.SocketFactory,SPRING_DATASOURCE_USERNAME=${{ secrets.POSTGRES_USER }},SPRING_DATASOURCE_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            --image gcr.io/rich-tea-387404/sneaker-app-web:latest \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated \
+            --add-cloudsql-instances rich-tea-387404:us-central1:sneaker-raffles-db \
+            --set-env-vars "SPRING_DATASOURCE_URL=jdbc:postgresql:///sneaker_raffles?cloudSqlInstance=rich-tea-387404:us-central1:sneaker-raffles-db&socketFactory=com.google.cloud.sql.postgres.SocketFactory" \
+            --set-env-vars SPRING_DATASOURCE_USERNAME=postgres \
+            --set-env-vars SPRING_DATASOURCE_PASSWORD=postgres \
+            --service-account github-actions@rich-tea-387404.iam.gserviceaccount.com \
