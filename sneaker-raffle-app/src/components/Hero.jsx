@@ -13,7 +13,7 @@ function Hero() {
         }}
       >
         <div className="text-center">
-          <h1 className="text-8xl font-bold">Welcome to CICD</h1>
+          <h1 className="text-8xl font-bold">Welcome to Drip Drop</h1>
           <p className="mt-4 text-xl">
             Experience the thrill of sneaker raffles and grab your dream pair
             today!
