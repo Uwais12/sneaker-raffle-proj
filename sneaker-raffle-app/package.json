@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@dhaiwat10/react-link-preview": "^1.15.0",
+    "@tailwindcss/typography": "^0.5.9",
     "@testing-library/jest-dom": "^5.16.5",
     "ag-grid-community": "^29.3.4",
     "ag-grid-react": "^29.3.4",
